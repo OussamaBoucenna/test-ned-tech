@@ -82,3 +82,15 @@ Reset complet de la base:
 docker compose down -v
 docker compose up --build
 ```
+
+## Architectural decisions
+
+- Auth: le JWT est stocke dans un cookie `httpOnly` plutot que dans `localStorage`. Cela reduit l'exposition aux vols de token via JavaScript en cas de XSS, au prix d'un peu plus d'attention sur la configuration CORS/cookies.
+- Structure: le repo est separe en `apps/api` et `apps/web` pour garder une separation claire entre backend et frontend, tout en partageant une configuration Docker unique a la racine.
+- Logging: l'audit log passe par un interceptor NestJS pour centraliser le suivi des actions mutables sans melanger cette logique avec les services metier.
+
+## Known limitations & next steps
+
+- Ajouter du rate limiting sur le login pour limiter les tentatives abusives.
+- Ajouter du cache cote backend sur quelques routes importantes, par exemple les catalogues (`roles`, `departments`) et certaines listes consultees frequemment.
+
