@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { ROUTES } from '../constants';
 import { useAuth } from '../context/AuthContext';
+import { AppLayout } from './layout/AppLayout';
 
 
-export function ProtectedRoute({ children }: { children: ReactNode }) {
+export function ProtectedRoute() {
   const { isAuthenticated, isCheckingAuth } = useAuth();
 
   if (isCheckingAuth) {
@@ -13,5 +13,9 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
   if (!isAuthenticated) {
     return <Navigate to={ROUTES.LOGIN} replace />;
   }
-  return <>{children}</>;
+  return (
+    <AppLayout>
+      <Outlet />
+    </AppLayout>
+  );
 }

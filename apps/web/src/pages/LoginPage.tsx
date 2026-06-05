@@ -16,7 +16,7 @@ export function LoginPage() {
    
     login.mutate(
       { email, password },
-      { onSuccess: () => navigate(ROUTES.HOME, { replace: true }) },
+      { onSuccess: () => navigate(ROUTES.EMPLOYEES, { replace: true }) },
     );
   }
 

@@ -2,7 +2,9 @@
 
 export const ROUTES = {
   LOGIN: '/login',
-  HOME: '/home',
+  // Protected app pages (rendered inside the AppLayout shell).
+  EMPLOYEES: '/employees',
+  LOGS: '/logs',
 } as const;
 
 export const API_ROUTES = {
@@ -10,6 +12,8 @@ export const API_ROUTES = {
   LOGOUT: '/auth/logout',
   ME: '/auth/me',
   EMPLOYEES: '/employees',
+  DEPARTMENTS: '/departments',
+  ROLES: '/roles',
 } as const;
 
 export const EMPLOYEE_STATUS = {
