@@ -1,0 +1,51 @@
+import { EMPLOYEE_STATUS } from './constants';
+
+export type EmployeeStatus = (typeof EMPLOYEE_STATUS)[keyof typeof EMPLOYEE_STATUS];
+
+/** A named lookup item (department or role) — powers the front-end selects. */
+export interface CatalogueItem {
+  id: string;
+  name: string;
+}
+
+export interface Employee {
+  id: string;
+  fullName: string;
+  email: string;
+  departmentId: string;
+  roleId: string;
+  status: EmployeeStatus;
+  createdAt: string;
+  updatedAt: string;
+  // Names included by the API for display (see employees.repository INCLUDE).
+  department: CatalogueItem;
+  role: CatalogueItem;
+}
+
+export interface PaginationMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface Paginated<T> {
+  items: T[];
+  meta: PaginationMeta;
+}
+
+export interface EmployeeQuery {
+  page?: number;
+  limit?: number;
+  search?: string;
+  departmentId?: string;
+}
+
+/** Body sent when creating/updating an employee (FK ids, not nested objects). */
+export interface EmployeeInput {
+  fullName: string;
+  email: string;
+  departmentId: string;
+  roleId: string;
+  status: EmployeeStatus;
+}
