@@ -8,6 +8,7 @@ const DEFAULT_LIMIT = 10;
 export function useEmployeeFilters() {
   const [search, setSearch] = useState('');
   const [departmentId, setDepartmentId] = useState('');
+  const [roleId, setRoleId] = useState('');
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(DEFAULT_LIMIT);
 
@@ -16,7 +17,7 @@ export function useEmployeeFilters() {
   // Any filter change sends the user back to the first page.
   useEffect(() => {
     setPage(1);
-  }, [debouncedSearch, departmentId]);
+  }, [debouncedSearch, departmentId, roleId]);
 
   function changeLimit(nextLimit: number) {
     setLimit(nextLimit);
@@ -26,10 +27,11 @@ export function useEmployeeFilters() {
   function reset() {
     setSearch('');
     setDepartmentId('');
+    setRoleId('');
     setPage(1);
   }
 
-  const hasActiveFilters = search !== '' || departmentId !== '';
+  const hasActiveFilters = search !== '' || departmentId !== '' || roleId !== '';
 
   const query = useMemo<EmployeeQuery>(
     () => ({
@@ -37,8 +39,9 @@ export function useEmployeeFilters() {
       limit,
       search: debouncedSearch || undefined,
       departmentId: departmentId || undefined,
+      roleId: roleId || undefined,
     }),
-    [page, limit, debouncedSearch, departmentId],
+    [page, limit, debouncedSearch, departmentId, roleId],
   );
 
   return {
@@ -47,6 +50,8 @@ export function useEmployeeFilters() {
     setSearch,
     departmentId,
     setDepartmentId,
+    roleId,
+    setRoleId,
     limit,
     setLimit: changeLimit,
     setPage,

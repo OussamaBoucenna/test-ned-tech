@@ -19,7 +19,6 @@ const ToastContext = createContext<ToastContextValue | undefined>(undefined);
 
 const AUTO_DISMISS_MS = 4000;
 
-
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const nextId = useRef(0);
@@ -49,12 +48,22 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <div className="toast-container" role="region" aria-live="polite">
+      <div
+        className="pointer-events-none fixed inset-x-4 bottom-4 z-[1100] flex max-w-full flex-col gap-3 md:right-4 md:left-auto md:w-[24rem]"
+        role="region"
+        aria-live="polite"
+      >
         {toasts.map((toast) => (
           <button
             key={toast.id}
             type="button"
-            className={`toast toast--${toast.variant}`}
+            className={`pointer-events-auto rounded-2xl border px-4 py-3 text-left text-sm font-medium shadow-2xl backdrop-blur transition hover:-translate-y-0.5 ${
+              toast.variant === 'success'
+                ? 'border-emerald-400/30 bg-emerald-500/15 text-emerald-100'
+                : toast.variant === 'error'
+                  ? 'border-rose-400/30 bg-rose-500/15 text-rose-100'
+                  : 'border-cyan-400/30 bg-cyan-500/15 text-cyan-50'
+            }`}
             onClick={() => dismiss(toast.id)}
           >
             {toast.message}

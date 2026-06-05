@@ -15,11 +15,12 @@ export class EmployeesService {
   constructor(private readonly repository: EmployeesRepository) {}
 
   async findAll(query: QueryEmployeesDto) {
-    const { page, limit, search, departmentId } = query;
+    const { page, limit, search, departmentId, roleId } = query;
 
     const where: Prisma.EmployeeWhereInput = {
       deletedAt: null,
       ...(departmentId ? { departmentId } : {}),
+      ...(roleId ? { roleId } : {}),
       ...(search
         ? {
             OR: [

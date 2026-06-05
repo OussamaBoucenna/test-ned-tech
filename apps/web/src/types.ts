@@ -66,6 +66,7 @@ export interface EmployeeQuery {
   limit?: number;
   search?: string;
   departmentId?: string;
+  roleId?: string;
 }
 
 /** Body sent when creating/updating an employee (FK ids, not nested objects). */

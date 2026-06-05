@@ -10,7 +10,6 @@ import { Modal } from './Modal';
 
 interface EmployeeFormModalProps {
   isOpen: boolean;
-  /** Present → edit mode (pre-filled); absent → create mode. */
   employee: Employee | null;
   isSubmitting: boolean;
   onClose: () => void;
@@ -45,9 +44,9 @@ export function EmployeeFormModal({
     defaultValues: EMPTY_VALUES,
   });
 
-  // Re-seed the form whenever the modal opens (pre-fill on edit, clear on create).
   useEffect(() => {
     if (!isOpen) return;
+
     reset(
       employee
         ? {
@@ -67,63 +66,102 @@ export function EmployeeFormModal({
       title={employee ? 'Edit Employee' : 'Add Employee'}
       onClose={onClose}
     >
-      <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-        <div className="form__field">
-          <label htmlFor="fullName">Full Name</label>
-          <input id="fullName" {...register('fullName')} />
-          {errors.fullName && <p className="form__error">{errors.fullName.message}</p>}
+      <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <div className="space-y-2">
+          <label htmlFor="fullName" className="text-sm font-medium text-slate-300">
+            Full Name
+          </label>
+          <input
+            id="fullName"
+            className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/50"
+            {...register('fullName')}
+          />
+          {errors.fullName && <p className="text-sm text-rose-300">{errors.fullName.message}</p>}
         </div>
 
-        <div className="form__field">
-          <label htmlFor="email">Email</label>
-          <input id="email" type="email" {...register('email')} />
-          {errors.email && <p className="form__error">{errors.email.message}</p>}
+        <div className="space-y-2">
+          <label htmlFor="email" className="text-sm font-medium text-slate-300">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/50"
+            {...register('email')}
+          />
+          {errors.email && <p className="text-sm text-rose-300">{errors.email.message}</p>}
         </div>
 
-        <div className="form__row">
-          <div className="form__field">
-            <label htmlFor="departmentId">Department</label>
-            <select id="departmentId" {...register('departmentId')}>
-              <option value="">Select…</option>
-              {departments.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.name}
+        <div className="grid gap-5 md:grid-cols-2">
+          <div className="space-y-2">
+            <label htmlFor="departmentId" className="text-sm font-medium text-slate-300">
+              Department
+            </label>
+            <select
+              id="departmentId"
+              className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/50"
+              {...register('departmentId')}
+            >
+              <option value="">Select...</option>
+              {departments.map((department) => (
+                <option key={department.id} value={department.id}>
+                  {department.name}
                 </option>
               ))}
             </select>
             {errors.departmentId && (
-              <p className="form__error">{errors.departmentId.message}</p>
+              <p className="text-sm text-rose-300">{errors.departmentId.message}</p>
             )}
           </div>
 
-          <div className="form__field">
-            <label htmlFor="roleId">Role</label>
-            <select id="roleId" {...register('roleId')}>
-              <option value="">Select…</option>
-              {roles.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.name}
+          <div className="space-y-2">
+            <label htmlFor="roleId" className="text-sm font-medium text-slate-300">
+              Role
+            </label>
+            <select
+              id="roleId"
+              className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/50"
+              {...register('roleId')}
+            >
+              <option value="">Select...</option>
+              {roles.map((role) => (
+                <option key={role.id} value={role.id}>
+                  {role.name}
                 </option>
               ))}
             </select>
-            {errors.roleId && <p className="form__error">{errors.roleId.message}</p>}
+            {errors.roleId && <p className="text-sm text-rose-300">{errors.roleId.message}</p>}
           </div>
         </div>
 
-        <div className="form__field">
-          <label htmlFor="status">Status</label>
-          <select id="status" {...register('status')}>
+        <div className="space-y-2">
+          <label htmlFor="status" className="text-sm font-medium text-slate-300">
+            Status
+          </label>
+          <select
+            id="status"
+            className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/50"
+            {...register('status')}
+          >
             <option value={EMPLOYEE_STATUS.ACTIVE}>Active</option>
             <option value={EMPLOYEE_STATUS.INACTIVE}>Inactive</option>
           </select>
         </div>
 
-        <div className="form__actions">
-          <button type="button" className="btn btn--ghost" onClick={onClose}>
+        <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:border-white/25 hover:bg-white/8"
+            onClick={onClose}
+          >
             Cancel
           </button>
-          <button type="submit" className="btn btn--primary" disabled={isSubmitting}>
-            {isSubmitting ? 'Saving…' : employee ? 'Save changes' : 'Create'}
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center rounded-xl bg-amber-300 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-[0_14px_30px_rgba(252,211,77,0.22)] transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Saving...' : employee ? 'Save changes' : 'Create'}
           </button>
         </div>
       </form>

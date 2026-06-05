@@ -25,4 +25,8 @@ export class QueryEmployeesDto {
   @IsOptional()
   @IsUUID()
   departmentId?: string;
+
+  @IsOptional()
+  @IsUUID()
+  roleId?: string;
 }
