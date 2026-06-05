@@ -12,6 +12,7 @@ export const API_ROUTES = {
   LOGOUT: '/auth/logout',
   ME: '/auth/me',
   EMPLOYEES: '/employees',
+  AUDIT_LOGS: '/activity',
   DEPARTMENTS: '/departments',
   ROLES: '/roles',
 } as const;

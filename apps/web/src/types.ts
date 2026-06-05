@@ -34,6 +34,33 @@ export interface Paginated<T> {
   meta: PaginationMeta;
 }
 
+export type AuditLogAction = 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+export type AuditLogStatus = 'SUCCESS' | 'FAILURE';
+
+export interface AuditLog {
+  id: string;
+  userId: string | null;
+  userEmail: string | null;
+  action: AuditLogAction;
+  resource: string;
+  payload: unknown;
+  status: AuditLogStatus;
+  errorMsg: string | null;
+  duration: number | null;
+  createdAt: string;
+}
+
+export interface AuditLogQuery {
+  page?: number;
+  limit?: number;
+  userId?: string;
+  action?: AuditLogAction;
+  status?: AuditLogStatus;
+  search?: string;
+  from?: string;
+  to?: string;
+}
+
 export interface EmployeeQuery {
   page?: number;
   limit?: number;

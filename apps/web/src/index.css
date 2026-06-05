@@ -627,6 +627,16 @@ button {
   background: rgba(248, 113, 113, 0.12);
 }
 
+.badge--success {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.12);
+}
+
+.badge--failure {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.12);
+}
+
 /* --- Pagination --- */
 .pagination {
   display: flex;
@@ -836,4 +846,35 @@ button {
   margin: 0 0 0.5rem;
   color: var(--text);
   line-height: 1.5;
+}
+
+/* --- Activity logs --- */
+.logs__head {
+  margin-bottom: 1rem;
+}
+
+.logs__title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.logs__subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.log-user {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.table__resource,
+.table__details {
+  max-width: 260px;
+  color: var(--muted);
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+  word-break: break-word;
 }
