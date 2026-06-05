@@ -5,5 +5,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
+    // In Docker the bind-mounted FS doesn't emit native change events, so
+    // fall back to polling for hot reload (enabled via the compose env var).
+    watch: process.env.CHOKIDAR_USEPOLLING
+      ? { usePolling: true }
+      : undefined,
   },
 });
